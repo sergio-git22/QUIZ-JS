@@ -74,22 +74,53 @@ let currentQuestion = 0;
 
 const title = document.getElementById("question");
 const respuestas = document.getElementById("respuestas");
+const infoQuestion = document.getElementById("info-question")
 
-function printQuestion() {
+function printQuestion(userAnswered, isCorrect) {
     title.innerText = questions[currentQuestion].question;
 
     let questionAnswers = questions[currentQuestion].respuestas;
     
     respuestas.innerHTML = "";
     
-    questions[currentQuestion].options.forEach((respuesta) => {
-    respuestas.innerHTML += `<button class="bg-slate-800 rounded-lg p-2 hover:bg-red-950 hover: text-white transition-all">${respuesta}</button>`
+    questions[currentQuestion].options.forEach((respuesta, index) => {
+        let bgButton = " bg-slate-700 rounded-lg p-2 hover:bg-black text-white transition-all";
+        if (userAnswered) {
+            if (respuesta == userAnswered) {
+                if (isCorrect) {
+                    bgButton = "bg-green-500 rounded-lg p-2 text-white transition-all";
+                } else {
+                    bgButton = "bg-red-500 rounded-lg p-2 text-white transition-all";
+                }
+            }
+        }
+
+        respuestas.innerHTML += `<button 
+        onclick="checkAnswer('${respuesta}')"
+        class="${bgButton}">${respuesta}</button>`
 });
+
+printNumPregunta();
 }
 
-printQuestion();
+function checkAnswer(respuesta) {
+    const currentCorrectAnswer = questions[currentQuestion].correctAnswer;
+
+    if (respuesta == currentCorrectAnswer) {
+        printQuestion(respuesta, true);
+    } else {
+        printQuestion(respuesta, false);
+    }
+}
 
 function nextQuestion() {
     currentQuestion++;
+    console.log(currentQuestion);
     printQuestion();
 }
+
+function printNumPregunta() {
+    infoQuestion.innerText = `Pregunta ${currentQuestion + 1} de ${questions.length}`
+}
+
+printQuestion();
