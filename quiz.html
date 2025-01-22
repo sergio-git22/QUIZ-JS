@@ -12,10 +12,14 @@
         <header class="flex justify-between py-4 px-6 border-b">
             <h1 class="font-bold text-xl">The F1 Quiz 🏁🏎️</h1>
             <div id="temporizador" class="flex gap-2 bg-purple-300 rounded-lg px-2 py-1 text-black border border-purple-950">
-                <p>Tiempo</p>
-                <p>30</p>
+                <p>Tiempo:</p>
+                <p id="txtTimer">30s</p>
             </div>
         </header>
+
+        <div class="bg-slate-300">
+            <div id="progressBar" class="h-1 bg-black opacity-0 rounded-md"></div>
+        </div>
         
         <section class="p-6">
             <h2 id="question" class="font-semibold text-2xl">Pregunta 1</h2>
@@ -30,7 +34,7 @@
 
             <button id="next" 
             onclick="nextQuestion()"
-            class="bg-slate-900 rounded-lg p-2 text-white">Siguiente</button>
+            class="disabled:bg-red-700 bg-green-600 rounded-lg p-2 text-white">Siguiente</button>
         </footer>
     </main>
     
