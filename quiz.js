@@ -1,88 +1,28 @@
-const questions = [
-  {
-    id: 1,
-    question: "1. ¿En qué año tuvo lugar la primera carrera de Fórmula 1?",
-    options: ["1952", "1949", "1950", "1951"],
-    correctAnswer: "1950",
-  },
+let questions = [];
 
-  {
-    id: 2,
-    question: "2. ¿Cuál es la escudería más laureada de la historia de la F1?",
-    options: ["Mercedes AMG", "Ferrari", "McLaren", "Red Bull Racing"],
-    correctAnswer: "Ferrari",
-  },
+const myHeaders = new Headers();
+myHeaders.append(
+  "apikey",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF5cnRuY2hhb2JpcnpmbHFoaWh2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzgxNDMyMzQsImV4cCI6MjA1MzcxOTIzNH0.quRhtK1ZK1l87SDdCVK9dKsvU36lvzuFWncBoWRZM4c"
+);
 
-  {
-    id: 3,
-    question: "3. ¿Quién es el piloto con más victorias de la categoría?",
-    options: [
-      "Fernando Alonso",
-      "Michael Schumacher",
-      "Ayrton Senna",
-      "Lewis Hamilton",
-    ],
-    correctAnswer: "Lewis Hamilton",
-  },
+const requestOptions = {
+  method: "GET",
+  headers: myHeaders,
+  redirect: "follow",
+};
 
-  {
-    id: 4,
-    question: "4. ¿En qué circuito se han disputado más Grandes Premios?",
-    options: ["Spa", "Mónaco", "Silverstone", "Monza"],
-    correctAnswer: "Monza",
-  },
-
-  {
-    id: 5,
-    question: "5. ¿Qué circuito tiene el historial más negro de accidentes?",
-    options: ["Mónaco", "Imola", "Nürburgring", "Spa"],
-    correctAnswer: "Nürburgring",
-  },
-
-  {
-    id: 6,
-    question:
-      "6. ¿Con qué equipo ganó Fernando Alonso sus dos títulos mundiales?",
-    options: ["McLaren", "Renault", "Aston Martin", "Ferrari"],
-    correctAnswer: "Renault",
-  },
-
-  {
-    id: 7,
-    question:
-      "7. ¿Cuántos títulos comparten Michael Schumacher y Lewis Hamilton?",
-    options: ["6", "4", "5", "7"],
-    correctAnswer: "7",
-  },
-
-  {
-    id: 8,
-    question:
-      "8. ¿Qué empresario y ex-piloto impulsó el desarrollo internacional de la F1?",
-    options: [
-      "Ron Dennis",
-      "Bernie Ecclestone",
-      "Flavio Briatore",
-      "Jean Todt",
-    ],
-    correctAnswer: "Bernie Ecclestone",
-  },
-
-  {
-    id: 9,
-    question:
-      "9. ¿Cuántos puntos se lleva actualmente el ganador de una carrera?",
-    options: ["30", "20", "25", "22"],
-    correctAnswer: "25",
-  },
-
-  {
-    id: 10,
-    question: "10. ¿Qué sistema facilita los adelantamientos hoy en día?",
-    options: ["ERS", "FIA", "KERS", "DRS"],
-    correctAnswer: "DRS",
-  },
-];
+fetch(
+  "https://qyrtnchaobirzflqhihv.supabase.co/rest/v1/Questions",
+  requestOptions
+)
+  .then((response) => response.json())
+  .then((result) => {
+    questions = result;
+    printQuestion();
+    intervalID = setInterval(countdown, 1000);
+  })
+  .catch((error) => console.error(error));
 
 let currentQuestion = 0;
 let isAnswered = false;
@@ -175,12 +115,10 @@ function printNumPregunta() {
   }`;
 }
 
-printQuestion();
-
 // Temporizador
 const totalTimer = 30;
 let timer = 30;
-let intervalID = setInterval(countdown, 1000);
+let intervalID;
 
 function countdown() {
   timer -= 1;
