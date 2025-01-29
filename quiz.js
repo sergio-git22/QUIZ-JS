@@ -96,10 +96,14 @@ const progressBar = document.getElementById("progressBar");
 btnNext.disabled = true;
 
 function printQuestion(userAnswered, isCorrect) {
+  // Muestra el título de la pregunta
   title.innerText = questions[currentQuestion].question;
 
   let questionAnswers = questions[currentQuestion].respuestas;
 
+  // questionAnswers.sort(() => Math.random() - 0.5);
+
+  // Antes de mostrar las nuevas respuestas, se borra el contenido del div
   respuestas.innerHTML = "";
 
   questions[currentQuestion].options.forEach((respuesta, index) => {
